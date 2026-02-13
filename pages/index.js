@@ -65,9 +65,10 @@ const Home = () => (
           About
         </Heading>
         <Paragraph>
-          I am a Computer Vision researcher and MS EE graduate from Columbia
-          University, specializing in 3D reconstruction, depth estimation, and
-          generative models. At Columbia, I worked with the{' '}
+          I work on 3D computer vision under real-world constraints, where
+          standard assumptions—dense views, perfect synchronization, and
+          controlled lighting—often break down. At Columbia, I worked with
+          the{' '}
           <Link href="https://cs3-erc.org/" target="_blank">
             CS3 team
           </Link>{' '}
