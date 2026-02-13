@@ -47,7 +47,7 @@ const MenuLink = forwardRef((props, ref) => (
 const Navbar = props => {
   const { path } = props
 
-  const hamburgerColor = useColorModeValue('#2C7A7B', '#E76F51')
+  const hamburgerScheme = useColorModeValue('teal', 'orange')
 
   return (
     <Box
@@ -99,10 +99,8 @@ const Navbar = props => {
               <MenuButton
                 as={IconButton}
                 icon={<HamburgerIcon />}
-                variant="outline"
+                colorScheme={hamburgerScheme}
                 aria-label="Options"
-                color={hamburgerColor}
-                borderColor={hamburgerColor}
               />
               <MenuList>
                 <MenuItem as={MenuLink} href="/projects">
