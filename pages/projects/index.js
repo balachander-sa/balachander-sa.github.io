@@ -51,7 +51,7 @@ const Projects = ({ projects }) => (
   </Layout>
 )
 
-export async function getServerSideProps({ req }) {
+export async function getStaticProps() {
   const fs = require('fs')
   const path = require('path')
   const matter = require('gray-matter')
@@ -68,10 +68,7 @@ export async function getServerSideProps({ req }) {
     })
 
   return {
-    props: {
-      cookies: req.headers.cookie ?? '',
-      projects
-    }
+    props: { projects }
   }
 }
 

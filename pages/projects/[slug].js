@@ -20,6 +20,7 @@ const proseStyles = {
 const ProjectPage = ({ title, contentHtml, fullContentHtml }) => {
   const [showFull, setShowFull] = useState(false)
   const proseColor = useColorModeValue('gray.800', 'whiteAlpha.900')
+  const collapseBorderColor = useColorModeValue('gray.200', 'whiteAlpha.200')
 
   return (
     <Layout title={title}>
@@ -52,7 +53,7 @@ const ProjectPage = ({ title, contentHtml, fullContentHtml }) => {
                   mt={2}
                   pt={4}
                   borderTop="1px solid"
-                  borderColor={useColorModeValue('gray.200', 'whiteAlpha.200')}
+                  borderColor={collapseBorderColor}
                   color={proseColor}
                   sx={proseStyles}
                   dangerouslySetInnerHTML={{ __html: fullContentHtml }}
@@ -66,7 +67,27 @@ const ProjectPage = ({ title, contentHtml, fullContentHtml }) => {
   )
 }
 
-export async function getServerSideProps({ req, params }) {
+export async function getStaticPaths() {
+  const fs = require('fs')
+  const path = require('path')
+  const matter = require('gray-matter')
+
+  const projectsDir = path.join(process.cwd(), 'content/projects')
+  const files = fs.readdirSync(projectsDir)
+  const paths = files
+    .filter(f => f.endsWith('.md'))
+    .map(filename => {
+      const slug = filename.replace(/\.md$/, '')
+      const raw = fs.readFileSync(path.join(projectsDir, filename), 'utf8')
+      const { data } = matter(raw)
+      return data.linked === false ? null : { params: { slug } }
+    })
+    .filter(Boolean)
+
+  return { paths, fallback: false }
+}
+
+export async function getStaticProps({ params }) {
   const fs = require('fs')
   const path = require('path')
   const matter = require('gray-matter')
@@ -75,10 +96,8 @@ export async function getServerSideProps({ req, params }) {
 
   const projectsDir = path.join(process.cwd(), 'content/projects')
   const filePath = path.join(projectsDir, `${params.slug}.md`)
-  if (!fs.existsSync(filePath)) return { notFound: true }
   const raw = fs.readFileSync(filePath, 'utf8')
   const { data, content } = matter(raw)
-  if (data.linked === false) return { notFound: true }
 
   const parts = content.split('<!-- MORE -->')
   const summary = parts[0].trim()
@@ -90,12 +109,7 @@ export async function getServerSideProps({ req, params }) {
   const fullContentHtml = full ? await toHtml(full) : null
 
   return {
-    props: {
-      cookies: req.headers.cookie ?? '',
-      ...data,
-      contentHtml,
-      fullContentHtml,
-    }
+    props: { ...data, contentHtml, fullContentHtml }
   }
 }
 

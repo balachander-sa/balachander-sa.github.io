@@ -150,4 +150,4 @@ const Publications = () => (
 )
 
 export default Publications
-export { getServerSideProps } from '../components/chakra'
+export { getStaticProps } from '../components/chakra'
