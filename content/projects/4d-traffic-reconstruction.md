@@ -1,0 +1,128 @@
+---
+title: "4D Traffic Scene Reconstruction"
+thumbnail: "/images/Projects/4D/view_2.jpg"
+date: "2024"
+---
+
+**Columbia University, Center for Smart Streetscapes (NSF ERC) | Summer 2024**  
+**Advisor: Prof. Zoran Kostic | ZKLab**
+
+Dense 3D reconstruction of urban intersections typically requires multiple synchronized, calibrated cameras. We investigate whether comparable reconstruction is achievable from just two unsynchronized cameras with ~180° viewpoint separation, mismatched resolutions (4K vs 1080p), and no shared clock — a setup reflecting real-world deployment constraints where camera placement is dictated by available infrastructure.
+
+<div style="display:flex;justify-content:center;gap:12px;margin:16px 0;">
+  <div style="text-align:center;width:45%;">
+    <img src="/images/Projects/4D/2view_1.png" style="width:100%;border-radius:6px;" />
+    <p style="font-size:0.85rem;color:gray;margin-top:6px;">View from Go Pro</p>
+  </div>
+  <div style="text-align:center;width:45%;">
+    <img src="/images/Projects/4D/2view_2.png" style="width:100%;border-radius:6px;" />
+    <p style="font-size:0.85rem;color:gray;margin-top:6px;">View from the CCTV on 2nd floor</p>
+  </div>
+</div>
+
+I developed a temporal alignment pipeline recovering frame-level synchronization entirely in software (metadata bootstrapping → buffer extraction → manual frame matching → synchronized corruption removal), then evaluated DUSt3R for multi-view reconstruction with automatic pose estimation and Metric3D for monocular depth as a per-view baseline. DUSt3R recovered coarse intersection geometry across the extreme baseline without manual calibration; Metric3D produced finer per-view depth but required manual cross-view registration.
+
+<div style="display:flex;justify-content:center;margin:16px 0;">
+  <div style="text-align:center;width:60%;">
+    <img src="/images/Projects/4D/Temporal_pipeline.png" style="width:100%;border-radius:6px;" />
+    <p style="font-size:0.85rem;color:gray;margin-top:6px;">Data Preprocessing Pipeline</p>
+  </div>
+</div>
+
+DUSt3R successfully registered the opposing viewpoints and recovered coarse intersection geometry without manual calibration, but sacrificed fine-grained detail. Metric3D produced higher-resolution per-view depth maps but required manual alignment for cross-view fusion. This complementary trade-off motivated a proposed hybrid pipeline using depth-conditioned diffusion models to bridge the viewpoint gap, which led directly to the subsequent depth-conditioned augmentation project.
+
+**Code & Data:** Available upon request through Prof. Zoran Kostic's lab (proprietary to CS3/COSMOS testbed)
+
+<!-- MORE -->
+
+## The Problem
+
+Multi-view 3D reconstruction assumes either hardware-synchronized cameras or post-hoc temporal alignment from shared visual features. Neither holds when cameras face each other across a wide baseline with no shared clock.
+How few cameras do you need to reconstruct a 3D traffic intersection — and what happens when those cameras share no infrastructure at all?
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 0;">
+  <img src="/images/Projects/4D/view_1.jpg" style="width:100%;border-radius:6px;" />
+  <img src="/images/Projects/4D/view_2.jpg" style="width:100%;border-radius:6px;" />
+  <img src="/images/Projects/4D/view_3.jpg" style="width:100%;border-radius:6px;" />
+  <img src="/images/Projects/4D/view_4.jpg" style="width:100%;border-radius:6px;" />
+</div>
+<p style="text-align:center;font-size:0.85rem;color:gray;margin-top:4px;">Views from 4 cameras</p>
+
+The CS3 COSMOS testbed at Columbia already had a working pipeline: four networked CCTV cameras with synchronized internal clocks, all feeding into DUSt3R for dense 3D point cloud generation. The reconstruction worked well — four overlapping views with known timing produce clean geometry.
+
+<div style="display:flex;justify-content:center;margin:12px 0;"><video controls style="width:50%;border-radius:6px;"><source src="/images/Projects/4D/multi_reconstruction_h264.mp4" type="video/mp4" /></video></div>
+<p style="text-align:center;font-size:0.85rem;color:gray;margin-top:4px;">4D reconstruction of all 4-cameras from the COSMOS testbed (DUSt3R, ViT-Large). All cameras are network-synchronized CCTVs.</p>
+
+But deploying four synchronized cameras at every intersection doesn't scale. The real question is whether you can get comparable reconstruction from fewer, cheaper, completely unsynchronized cameras — the kind of setup you'd actually deploy in the field.
+
+---
+
+## Our Setup: Two Cameras, Zero Shared Infrastructure
+
+We placed two cameras at diagonally opposite corners of the 120th St & Amsterdam Ave intersection:
+
+- **Camera 1:** 2nd floor of the Mudd building at Columbia, 4K resolution, AVI format, 2-4 hour continuous recording via the COSMOS testbed
+- **Camera 2:** GoPro HERO5 Black, strapped to a pole at 10 feet above the road, 1080p, MP4 format, ~90 minutes of battery life
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0;">
+  <div style="text-align:center;">
+    <img src="/images/Projects/4D/Intersection.png" style="width:100%;border-radius:6px;" />
+    <p style="font-size:0.85rem;color:gray;margin-top:6px;">Position of cameras in the intersection.</p>
+  </div>
+  <div style="text-align:center;">
+    <img src="/images/Projects/4D/2_view.png" style="width:100%;border-radius:6px;" />
+    <p style="font-size:0.85rem;color:gray;margin-top:6px;">A frame (top) from the second floor building and its corresponding frame temporally synchronized (bottom).</p>
+  </div>
+</div>
+
+The cameras face each other with nearly 180° viewpoint separation and a significant elevation difference. They share no network, no clock, no synchronization signal. The GoPro's FAT32 SD card splits recordings into 17-minute, ~3.7GB chunks. The two video streams have different resolutions, different codecs, different frame rates, and no temporal correspondence.
+
+This is deliberately harder than the 4-camera setup — and it mirrors real-world smart city constraints where camera placement is dictated by available infrastructure (building facades, existing poles), not optimized for reconstruction.
+
+---
+
+## Temporal Synchronization Without Hardware
+
+With no shared clock, the entire temporal alignment had to be recovered by designing a pipeline:
+
+**Step 1 — Rough alignment from metadata:** Camera timestamps provided an approximate overlap estimate, but clock drift between devices meant this was only accurate to within several minutes.
+
+**Step 2 — Buffer extraction:** A 20-minute window (±10 min around the rough estimate) was extracted from the longer 2nd-floor footage, narrowing the search space from hours to minutes.
+
+**Step 3 — Manual frame matching:** Within this buffer, exact frame-level correspondence was established through manual comparison. Automated feature matching (SIFT) fails here — nearly opposite viewpoints with an elevation change share too few visual features. Moving objects (vehicles, pedestrians) appear so different from the two perspectives that they confuse matchers rather than helping them.
+
+**Step 4 — Synchronized corruption handling:** Corrupted frames (visual artifacts, encoding errors, dropped frames) were detected in both streams. When frame *n* is flagged in either stream, it is removed from both — preserving frame-level alignment across the full dataset.
+
+<div style="display:flex;justify-content:center;margin:16px 0;">
+  <div style="text-align:center;width:75%;">
+    <img src="/images/Projects/4D/Temporal_pipeline.png" style="width:100%;border-radius:6px;" />
+    <p style="font-size:0.85rem;color:gray;margin-top:6px;">Data Preprocessing Pipeline</p>
+  </div>
+</div>
+
+The output: two cleaned, frame-synchronized video sequences from extreme viewpoints, with no shared infrastructure beyond the alignment pipeline itself.
+
+---
+
+## 3D Reconstruction: Two Approaches, One Trade-Off
+
+**DUSt3R (multi-view):** Takes the synchronized frame pairs and jointly estimates camera poses and dense 3D pointmaps using a ViT-Large backbone. The key advantage: DUSt3R infers camera intrinsics and extrinsics during alignment — no calibration needed. Despite the ~180° baseline and elevation change, it recovers the intersection's coarse spatial structure: road plane, crosswalks, vehicles, and building facades.
+
+<div style="display:flex;flex-direction:column;align-items:center;gap:8px;margin:16px 0;">
+  <img src="/images/Projects/4D/Dust3r_1.png" style="width:75%;border-radius:6px;" />
+  <img src="/images/Projects/4D/Dust3r_2.png" style="width:75%;border-radius:6px;" />
+  <p style="font-size:0.85rem;color:gray;margin-top:4px;">DUSt3R reconstruction of the same scene / frame from 2 different views</p>
+</div>
+
+**Metric3D (monocular):** Produces per-frame metric depth maps from each view independently using canonical camera space transformation. The depth maps capture finer detail — individual vehicles, lane markings, surface geometry — but each view reconstructs in its own coordinate system. Fusing two Metric3D outputs requires manual extrinsic alignment, which is fragile and time-consuming when the viewpoints are nearly opposite.
+
+<div style="display:flex;justify-content:center;margin:16px 0;">
+  <div style="text-align:center;width:75%;">
+    <img src="/images/Projects/4D/Metric3D.png" style="width:100%;border-radius:6px;" />
+    <p style="font-size:0.85rem;color:gray;margin-top:4px;">Metric3D reconstruction of the same scene</p>
+  </div>
+</div>
+
+**The core trade-off:** DUSt3R automates the geometric registration but loses fine detail. Metric3D preserves detail but can't auto-register views with extreme baselines. Neither alone gives you both precision and automation.
+
+**Code & Data:** Available upon request through Prof. Zoran Kostic's lab (proprietary to CS3/COSMOS testbed)
