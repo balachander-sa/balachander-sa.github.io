@@ -150,7 +150,7 @@ const Experience = () => (
           <CVItem
             date="2021"
             institution="Post-Baccalaureate Fellow"
-            suffix={<> — <Link href="https://web.archive.org/web/20220810102539/https://rbcdsai.iitm.ac.in/people/balachander-s/" isExternal textDecoration="underline">RBCDSAI</Link></>}
+            suffix={<> — <Link href="https://rbcdsai.iitm.ac.in/people/balachander-s/" isExternal textDecoration="underline">RBCDSAI</Link></>}
             degree="AI Research Lab • IIT Madras"
           />
           <CVItem
