@@ -41,7 +41,7 @@ const Home = () => (
           textAlign="center"
         >
           <Box
-            borderColor="whiteAlpha.800"
+            borderColor={useColorModeValue('#2C7A7B', 'whiteAlpha.800')}
             borderWidth={2}
             borderStyle="solid"
             w="100px"
