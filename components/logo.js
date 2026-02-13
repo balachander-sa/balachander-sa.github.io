@@ -1,39 +1,47 @@
 import Link from 'next/link'
 import { Text, useColorModeValue } from '@chakra-ui/react'
-import FootprintIcon from './icons/footprint'
+import Image from 'next/image'
 import styled from '@emotion/styled'
 
 const LogoBox = styled.span`
   font-weight: bold;
-  font-size: 18px;
+  font-size: 33px;
   display: inline-flex;
   align-items: center;
-  height: 30px;
-  line-height: 20px;
-  padding: 10px;
+  line-height: 1;
+  padding: 4px 8px;
 
-  > svg {
+  > img {
     transition: 200ms ease;
   }
 
-  &:hover > svg {
+  &:hover > img {
     transform: rotate(20deg);
   }
 `
 
 const Logo = () => {
+  const logoFilter = useColorModeValue('none', 'invert(1)')
+
   return (
     (<Link href="/" scroll={false}>
 
       <LogoBox>
-        <FootprintIcon />
+        <Image
+          src="/images/Bala_logo.png"
+          alt="Bala logo"
+          width={54}
+          height={54}
+          style={{ objectFit: 'contain', filter: logoFilter }}
+        />
         <Text
           color={useColorModeValue('gray.800', 'whiteAlpha.900')}
           fontFamily='M PLUS Rounded 1c", sans-serif'
           fontWeight="bold"
-          ml={3}
+          fontSize="2xl"
+          ml={4}
         >
-          Takuya Matsuyama
+          Bala Chander
         </Text>
       </LogoBox>
 
