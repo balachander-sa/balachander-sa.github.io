@@ -88,13 +88,13 @@ const Experience = () => (
           <CVItem
             date="Sep 2023 – Dec 2024"
             location="New York, NY"
-            degree="Master of Science in Electrical Engineering, GPA: 3.7/4"
+            degree="Master of Science in Electrical Engineering"
             institution="Columbia University"
           />
           <CVItem
             date="Jul 2017 – Jul 2021"
             location="Coimbatore, India"
-            degree="Bachelor of Technology in Electronics and Communication Engineering, GPA: 8.59/10"
+            degree="Bachelor of Technology in Electronics and Communication Engineering"
             institution="Amrita Vishwa Vidyapeetham"
             last
           />
