@@ -21,6 +21,8 @@ const ProjectPage = ({ title, contentHtml, fullContentHtml }) => {
   const [showFull, setShowFull] = useState(false)
   const proseColor = useColorModeValue('gray.800', 'whiteAlpha.900')
   const collapseBorderColor = useColorModeValue('gray.200', 'whiteAlpha.200')
+  const btnBg = useColorModeValue('#7C3238', '#E76F51')
+  const btnHover = useColorModeValue('#5e2229', '#d4623f')
 
   return (
     <Layout title={title}>
@@ -39,11 +41,11 @@ const ProjectPage = ({ title, contentHtml, fullContentHtml }) => {
                 mt={4}
                 mb={2}
                 size="sm"
-                bg="cyan.400"
-                color="black"
+                bg={btnBg}
+                color="white"
                 fontWeight="bold"
                 px={4}
-                _hover={{ bg: 'cyan.300' }}
+                _hover={{ bg: btnHover }}
                 onClick={() => setShowFull(v => !v)}
               >
                 {showFull ? 'Hide full writeup ↑' : 'Read the full writeup ↓'}

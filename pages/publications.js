@@ -4,7 +4,7 @@ import Section from '../components/section'
 import Image from 'next/image'
 
 const SelectLabel = () => {
-  const color = useColorModeValue('#6B46C1', '#E76F51')
+  const color = useColorModeValue('#7C3238', '#E76F51')
   return (
     <Text fontSize="xs" fontWeight="bold" color={color} textTransform="uppercase" letterSpacing="wider" mb={2}>
       ★ Select Paper
@@ -24,9 +24,11 @@ const PublicationItem = ({
   codeUrl,
   selected
 }) => {
-  const highlightColor = useColorModeValue('#6B46C1', '#E76F51')
-  const selectedBg = useColorModeValue('rgba(107, 70, 193, 0.08)', 'rgba(231, 111, 81, 0.1)')
-  const selectedBorder = useColorModeValue('rgba(107, 70, 193, 0.4)', 'rgba(231, 111, 81, 0.4)')
+  const highlightColor = useColorModeValue('#7C3238', '#E76F51')
+  const selectedBg = useColorModeValue('rgba(124, 50, 56, 0.15)', 'rgba(231, 111, 81, 0.1)')
+  const selectedBorder = useColorModeValue('rgba(124, 50, 56, 0.5)', 'rgba(231, 111, 81, 0.4)')
+  const badgeBg = useColorModeValue('#DBEAFE', '#B2F5EA')
+  const badgeColor = useColorModeValue('#1E3A5F', '#234E52')
 
   const renderAuthors = () => {
     if (!highlightName) return authors
@@ -78,17 +80,17 @@ const PublicationItem = ({
           </Text>
           {projectUrl && (
             <Link href={projectUrl} isExternal>
-              <Badge colorScheme="teal" cursor="pointer">project</Badge>
+              <Badge bg={badgeBg} color={badgeColor} cursor="pointer">project</Badge>
             </Link>
           )}
           {paperUrl && (
             <Link href={paperUrl} isExternal>
-              <Badge colorScheme="teal" cursor="pointer">paper</Badge>
+              <Badge bg={badgeBg} color={badgeColor} cursor="pointer">paper</Badge>
             </Link>
           )}
           {codeUrl && (
             <Link href={codeUrl} isExternal>
-              <Badge colorScheme="teal" cursor="pointer">code</Badge>
+              <Badge bg={badgeBg} color={badgeColor} cursor="pointer">code</Badge>
             </Link>
           )}
         </Box>

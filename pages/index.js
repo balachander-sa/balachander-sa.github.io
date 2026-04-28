@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import {
   Link,
   Container,
@@ -12,7 +13,21 @@ import Layout from '../components/layouts/article'
 import Section from '../components/section'
 import Image from 'next/image'
 
-const Home = () => (
+const PROFILE_COLORS = {
+  light: ['#1A4D8F', '#5C0120'],
+  dark: ['#E76F51', '#2C7A7B'],
+}
+
+const Home = () => {
+  const heroBg = useColorModeValue('whiteAlpha.500', 'whiteAlpha.200')
+  const accentColor = useColorModeValue('#7C3238', '#E76F51')
+  const [colorIdx] = useState(() => Math.floor(Math.random() * 2))
+  const profileBg = useColorModeValue(
+    PROFILE_COLORS.light[colorIdx],
+    PROFILE_COLORS.dark[colorIdx]
+  )
+
+  return (
   <Layout>
     <Container maxW={{ base: '100%', md: '800px', xl: '960px' }} px={{ base: 4, md: 8 }}>
       <Box
@@ -20,7 +35,7 @@ const Home = () => (
         mb={6}
         p={3}
         textAlign="center"
-        bg={useColorModeValue('whiteAlpha.500', 'whiteAlpha.200')}
+        bg={heroBg}
         css={{ backdropFilter: 'blur(10px)' }}
       >
         3D Computer Vision | Active illumination | Multi-view geometry | Generative models
@@ -41,7 +56,8 @@ const Home = () => (
           textAlign="center"
         >
           <Box
-            borderColor="whiteAlpha.800"
+            bg={profileBg}
+            borderColor={profileBg}
             borderWidth={2}
             borderStyle="solid"
             w="100px"
@@ -51,7 +67,7 @@ const Home = () => (
             overflow="hidden"
           >
             <Image
-              src="/images/Bala_profile_pic.jpg"
+              src="/images/Bala_profile_pic.png"
               alt="Profile image"
               width="100"
               height="100"
@@ -164,17 +180,17 @@ const Home = () => (
         </Heading>
         <List spacing={3}>
           <ListItem>
-            <strong>3D Reconstruction &amp; Multi-View Geometry</strong>
+            <strong style={{ color: accentColor }}>3D Reconstruction &amp; Multi-View Geometry</strong>
             <br />
             Understanding and reconstructing visual scenes from multi-view and sparse inputs, including depth estimation, point cloud generation, and scene consistency.
           </ListItem>
           <ListItem>
-            <strong>Computational Imaging &amp; Active Illumination</strong>
+            <strong style={{ color: accentColor }}>Computational Imaging &amp; Active Illumination</strong>
             <br />
             Designing imaging systems that combine optical hardware, structured lighting, and computational methods to recover geometry and surface properties beyond what passive cameras capture.
           </ListItem>
           <ListItem>
-            <strong>Geometry-Conditioned Generative Models</strong>
+            <strong style={{ color: accentColor }}>Geometry-Conditioned Generative Models</strong>
             <br />
             Leveraging diffusion models with geometric priors like depth and surface normals for 3D-consistent data augmentation and scene understanding.
           </ListItem>
@@ -183,7 +199,8 @@ const Home = () => (
 
     </Container>
   </Layout>
-)
+  )
+}
 
 export default Home
 export { getStaticProps } from '../components/chakra'

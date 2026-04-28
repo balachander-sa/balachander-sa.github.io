@@ -7,8 +7,7 @@ date: "2024"
 **Columbia University, Center for Smart Streetscapes (NSF ERC) | Summer 2024**  
 **Advisor: Prof. Zoran Kostic | ZKLab**
 
-Dense 3D reconstruction of urban intersections typically requires multiple synchronized, calibrated cameras. We investigate whether comparable reconstruction is achievable from just two unsynchronized cameras with ~180° viewpoint separation, mismatched resolutions (4K vs 1080p), and no shared clock — a setup reflecting real-world deployment constraints where camera placement is dictated by available infrastructure.
-
+Dense 3D reconstruction of urban intersections typically requires multiple synchronized, calibrated cameras. In this project, I investigate whether meaningful reconstruction is possible using two unsynchronized cameras with ~180° viewpoint separation, mismatched resolutions, and no shared infrastructure, reflecting realistic smart-city constraints.
 <div style="display:flex;justify-content:center;gap:12px;margin:16px 0;">
   <div style="text-align:center;width:45%;">
     <img src="/images/Projects/4D/2view_1.png" style="width:100%;border-radius:6px;" />
@@ -21,6 +20,8 @@ Dense 3D reconstruction of urban intersections typically requires multiple synch
 </div>
 
 I developed a temporal alignment pipeline recovering frame-level synchronization entirely in software (metadata bootstrapping → buffer extraction → manual frame matching → synchronized corruption removal), then evaluated DUSt3R for multi-view reconstruction with automatic pose estimation and Metric3D for monocular depth as a per-view baseline. DUSt3R recovered coarse intersection geometry across the extreme baseline without manual calibration; Metric3D produced finer per-view depth but required manual cross-view registration.
+
+To enable this, I developed a fully software-based temporal alignment pipeline to recover frame-level synchronization despite clock drift, extreme viewpoint differences, and lack of shared visual features. Notably, standard feature-matching methods (e.g., SIFT) fail in this regime due to minimal cross-view correspondence and dynamic scene elements.
 
 <div style="display:flex;justify-content:center;margin:16px 0;">
   <div style="text-align:center;width:60%;">

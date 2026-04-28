@@ -21,10 +21,10 @@ const SectionCard = ({ title, children }) => {
 }
 
 const CVItem = ({ date, location, degree, institution, suffix, coursework, bullets, last }) => {
-  const accentColor = useColorModeValue('#2C7A7B', '#E76F51')
-  const dateBg = useColorModeValue('rgba(44, 122, 123, 0.06)', 'rgba(231, 111, 81, 0.06)')
-  const dateBorder = useColorModeValue('rgba(44, 122, 123, 0.3)', 'rgba(231, 111, 81, 0.3)')
-  const dateText = useColorModeValue('#2C7A7B', '#E76F51')
+  const accentColor = useColorModeValue('#7C3238', '#E76F51')
+  const dateBg = useColorModeValue('rgba(124, 50, 56, 0.06)', 'rgba(231, 111, 81, 0.06)')
+  const dateBorder = useColorModeValue('rgba(124, 50, 56, 0.3)', 'rgba(231, 111, 81, 0.3)')
+  const dateText = useColorModeValue('#7C3238', '#E76F51')
   const dividerColor = useColorModeValue('gray.200', 'whiteAlpha.100')
   const subTextColor = useColorModeValue('gray.600', 'gray.400')
 
@@ -149,7 +149,7 @@ const Experience = () => (
         <SectionCard title="Awards & Achievements">
           <CVItem
             date="2021"
-            institution="Post-Baccalaureate Fellow"
+            institution="Post-Baccalaureate Fellowship"
             suffix={<> — <Link href="https://rbcdsai.iitm.ac.in/people/balachander-s/" isExternal textDecoration="underline">RBCDSAI</Link></>}
             degree="AI Research Lab • IIT Madras"
           />

@@ -20,14 +20,16 @@ import ThemeToggleButton from './theme-toggle-button'
 const LinkItem = ({ href, path, target, children, ...props }) => {
   const active = path === href
   const inactiveColor = useColorModeValue('gray.800', 'whiteAlpha.900')
+  const activeTabBg = useColorModeValue('#1A4D8F', '#88ccca')
+  const activeTabText = useColorModeValue('#ffffff', '#202023')
   return (
     <Link
       as={NextLink}
       href={href}
       scroll={false}
       p={2}
-      bg={active ? 'grassTeal' : undefined}
-      color={active ? '#202023' : inactiveColor}
+      bg={active ? activeTabBg : undefined}
+      color={active ? activeTabText : inactiveColor}
       target={target}
       fontSize="md"
       fontWeight="bold"
@@ -47,8 +49,8 @@ const MenuLink = forwardRef((props, ref) => (
 const Navbar = props => {
   const { path } = props
 
-  const hamburgerBg = useColorModeValue('#2C7A7B', '#E76F51')
-  const hamburgerHover = useColorModeValue('#235f60', '#d4623f')
+  const hamburgerBg = useColorModeValue('#7C3238', '#E76F51')
+  const hamburgerHover = useColorModeValue('#5e2229', '#d4623f')
 
   return (
     <Box
