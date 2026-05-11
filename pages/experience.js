@@ -150,13 +150,13 @@ const Experience = () => (
           <CVItem
             date="2021"
             institution="Post-Baccalaureate Fellowship"
-            suffix={<> — <Link href="https://rbcdsai.iitm.ac.in/people/balachander-s/" isExternal textDecoration="underline">RBCDSAI</Link></>}
+            suffix={<> — <Link href="https://web.archive.org/web/20260415080038/https://rbcdsai.iitm.ac.in/people/balachander-s/" isExternal textDecoration="underline">RBCDSAI</Link></>}
             degree="AI Research Lab • IIT Madras"
           />
           <CVItem
             date="2020"
             institution="1st Place"
-            suffix={<> — <Link href="https://web.archive.org/web/20200918135415/https://www.sih.gov.in/SoftwarefinalResult2020" isExternal textDecoration="underline">Smart India Hackathon 2020</Link></>}
+            suffix={<> — <Link href="https://web.archive.org/web/20200918135415/https://www.sih.gov.in/SoftwarefinalResult2020#:~:text=Infinity%20Gems-,Balachander%20S,-SK215" isExternal textDecoration="underline">Smart India Hackathon 2020</Link></>}
             degree="Team Lead • 334 winners from 200,000+ teams nationwide"
           />
           <CVItem

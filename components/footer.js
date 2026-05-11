@@ -2,7 +2,7 @@ import { Box, Link} from '@chakra-ui/react'
 
 const Footer = () => {
   return (
-    <Box align="center" opacity={0.4} fontSize="xs">
+    <Box align="center" opacity={0.4} fontSize="9px">
       Website credits to{' '}
       <Link href='https://www.craftz.dog/' isExternal textDecoration="underline">
         Takuya Matsuyama

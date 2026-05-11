@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import {
   Link,
   Container,
@@ -14,14 +14,22 @@ import Section from '../components/section'
 import Image from 'next/image'
 
 const PROFILE_COLORS = {
-  light: ['#1A4D8F', '#5C0120'],
+  light: ['#5C0120', '#1A4D8F'],
   dark: ['#E76F51', '#2C7A7B'],
 }
 
 const Home = () => {
   const heroBg = useColorModeValue('whiteAlpha.500', 'whiteAlpha.200')
   const accentColor = useColorModeValue('#7C3238', '#E76F51')
-  const [colorIdx] = useState(() => Math.floor(Math.random() * 2))
+  const [colorIdx, setColorIdx] = useState(0)
+  const didInit = useRef(false)
+  useEffect(() => {
+    if (didInit.current) return
+    didInit.current = true
+    const current = parseInt(localStorage.getItem('profileColorIdx') ?? '0', 10)
+    setColorIdx(current)
+    localStorage.setItem('profileColorIdx', String(1 - current))
+  }, [])
   const profileBg = useColorModeValue(
     PROFILE_COLORS.light[colorIdx],
     PROFILE_COLORS.dark[colorIdx]
