@@ -112,7 +112,7 @@ const Home = () => {
           mb={10}
           display="flex"
           flexWrap="nowrap"
-          gap={6}
+          gap="70px"
           alignItems="center"
           justifyContent="center"
         >
@@ -120,46 +120,46 @@ const Home = () => {
             <Image
               src="/images/corp_logos/Columbia.jpg"
               alt="Columbia University"
-              width={144}
-              height={72}
-              style={{ objectFit: 'contain', width: 144, height: 72 }}
+              width={64}
+              height={64}
+              style={{ objectFit: 'contain', width: 64, height: 64 }}
             />
           </Link>
           <Link href="https://www.iitm.ac.in/" target="_blank">
             <Image
               src="/images/corp_logos/IIT_M.svg"
               alt="IIT Madras"
-              width={120}
-              height={60}
+              width={64}
+              height={64}
               unoptimized
-              style={{ objectFit: 'contain', width: 120, height: 60 }}
+              style={{ objectFit: 'contain', width: 64, height: 64 }}
             />
           </Link>
           <Link href="https://cs3-erc.org/" target="_blank">
             <Image
               src="/images/corp_logos/CS3.jpeg"
               alt="CS3"
-              width={144}
-              height={72}
-              style={{ objectFit: 'contain', width: 144, height: 72 }}
+              width={64}
+              height={64}
+              style={{ objectFit: 'contain', width: 64, height: 64 }}
             />
           </Link>
           <Link href="https://rbcdsai.iitm.ac.in" target="_blank">
             <Image
               src="/images/corp_logos/RBCDSAI.jpeg"
               alt="RBCDSAI"
-              width={144}
-              height={72}
-              style={{ objectFit: 'contain', width: 144, height: 72 }}
+              width={64}
+              height={64}
+              style={{ objectFit: 'contain', width: 64, height: 64 }}
             />
           </Link>
           <Link href="https://mopng.gov.in/en" target="_blank">
             <Image
               src="/images/corp_logos/Emblem_of_India.jpeg"
               alt="Government of India"
-              width={72}
-              height={72}
-              style={{ objectFit: 'contain', width: 72, height: 72 }}
+              width={40}
+              height={64}
+              style={{ objectFit: 'contain', width: 40, height: 64 }}
             />
           </Link>
         </Box>
