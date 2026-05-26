@@ -112,55 +112,34 @@ const Home = () => {
           mb={10}
           display="flex"
           flexWrap="nowrap"
-          gap="70px"
+          gap={{ base: '24px', md: '70px' }}
           alignItems="center"
           justifyContent="center"
         >
           <Link href="https://www.columbia.edu/" target="_blank">
-            <Image
-              src="/images/corp_logos/Columbia.jpg"
-              alt="Columbia University"
-              width={64}
-              height={64}
-              style={{ objectFit: 'contain', width: 64, height: 64 }}
-            />
+            <Box w={{ base: '44px', md: '64px' }} h={{ base: '44px', md: '64px' }} position="relative">
+              <Image src="/images/corp_logos/Columbia.jpg" alt="Columbia University" fill style={{ objectFit: 'contain' }} />
+            </Box>
           </Link>
           <Link href="https://www.iitm.ac.in/" target="_blank">
-            <Image
-              src="/images/corp_logos/IIT_M.svg"
-              alt="IIT Madras"
-              width={64}
-              height={64}
-              unoptimized
-              style={{ objectFit: 'contain', width: 64, height: 64 }}
-            />
+            <Box w={{ base: '44px', md: '64px' }} h={{ base: '44px', md: '64px' }} position="relative">
+              <Image src="/images/corp_logos/IIT_M.svg" alt="IIT Madras" fill unoptimized style={{ objectFit: 'contain' }} />
+            </Box>
           </Link>
           <Link href="https://cs3-erc.org/" target="_blank">
-            <Image
-              src="/images/corp_logos/CS3.jpeg"
-              alt="CS3"
-              width={64}
-              height={64}
-              style={{ objectFit: 'contain', width: 64, height: 64 }}
-            />
+            <Box w={{ base: '44px', md: '64px' }} h={{ base: '44px', md: '64px' }} position="relative">
+              <Image src="/images/corp_logos/CS3.jpeg" alt="CS3" fill style={{ objectFit: 'contain' }} />
+            </Box>
           </Link>
           <Link href="https://rbcdsai.iitm.ac.in" target="_blank">
-            <Image
-              src="/images/corp_logos/RBCDSAI.jpeg"
-              alt="RBCDSAI"
-              width={64}
-              height={64}
-              style={{ objectFit: 'contain', width: 64, height: 64 }}
-            />
+            <Box w={{ base: '44px', md: '64px' }} h={{ base: '44px', md: '64px' }} position="relative">
+              <Image src="/images/corp_logos/RBCDSAI.jpeg" alt="RBCDSAI" fill style={{ objectFit: 'contain' }} />
+            </Box>
           </Link>
           <Link href="https://mopng.gov.in/en" target="_blank">
-            <Image
-              src="/images/corp_logos/Emblem_of_India.jpeg"
-              alt="Government of India"
-              width={40}
-              height={64}
-              style={{ objectFit: 'contain', width: 40, height: 64 }}
-            />
+            <Box w={{ base: '28px', md: '40px' }} h={{ base: '44px', md: '64px' }} position="relative">
+              <Image src="/images/corp_logos/Emblem_of_India.jpeg" alt="Government of India" fill style={{ objectFit: 'contain' }} />
+            </Box>
           </Link>
         </Box>
       </Section>
