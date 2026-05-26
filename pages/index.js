@@ -1,4 +1,3 @@
-import { useState, useEffect, useRef } from 'react'
 import {
   Link,
   Container,
@@ -13,27 +12,11 @@ import Layout from '../components/layouts/article'
 import Section from '../components/section'
 import Image from 'next/image'
 
-const PROFILE_COLORS = {
-  light: ['#5C0120', '#1A4D8F'],
-  dark: ['#E76F51', '#2C7A7B'],
-}
 
 const Home = () => {
   const heroBg = useColorModeValue('whiteAlpha.500', 'whiteAlpha.200')
   const accentColor = useColorModeValue('#7C3238', '#E76F51')
-  const [colorIdx, setColorIdx] = useState(0)
-  const didInit = useRef(false)
-  useEffect(() => {
-    if (didInit.current) return
-    didInit.current = true
-    const current = parseInt(localStorage.getItem('profileColorIdx') ?? '0', 10)
-    setColorIdx(current)
-    localStorage.setItem('profileColorIdx', String(1 - current))
-  }, [])
-  const profileBg = useColorModeValue(
-    PROFILE_COLORS.light[colorIdx],
-    PROFILE_COLORS.dark[colorIdx]
-  )
+  const profileBg = useColorModeValue('#5C0120', '#E76F51')
 
   return (
   <Layout>
@@ -75,7 +58,7 @@ const Home = () => {
             overflow="hidden"
           >
             <Image
-              src="/images/Bala_profile_pic.png"
+              src="/images/Bala_profile_pic.webp"
               alt="Profile image"
               width="100"
               height="100"
@@ -90,8 +73,8 @@ const Home = () => {
         </Heading>
         <Paragraph>
           I work on 3D computer vision under real-world constraints, where
-          standard assumptions—dense views, perfect synchronization, and
-          controlled lighting—often break down. At Columbia, I worked with
+          standard assumptions like dense views, perfect synchronization, and
+          controlled lighting often break down. At Columbia, I worked with
           the{' '}
           <Link href="https://cs3-erc.org/" target="_blank">
             CS3 team

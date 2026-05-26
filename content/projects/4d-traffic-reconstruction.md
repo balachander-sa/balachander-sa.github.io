@@ -19,9 +19,7 @@ Dense 3D reconstruction of urban intersections typically requires multiple synch
   </div>
 </div>
 
-I developed a temporal alignment pipeline recovering frame-level synchronization entirely in software (metadata bootstrapping → buffer extraction → manual frame matching → synchronized corruption removal), then evaluated DUSt3R for multi-view reconstruction with automatic pose estimation and Metric3D for monocular depth as a per-view baseline. DUSt3R recovered coarse intersection geometry across the extreme baseline without manual calibration; Metric3D produced finer per-view depth but required manual cross-view registration.
-
-To enable this, I developed a fully software-based temporal alignment pipeline to recover frame-level synchronization despite clock drift, extreme viewpoint differences, and lack of shared visual features. Notably, standard feature-matching methods (e.g., SIFT) fail in this regime due to minimal cross-view correspondence and dynamic scene elements.
+Since the cameras share no clock, I built a fully software-based temporal alignment pipeline to recover frame-level synchronization across clock drift, extreme viewpoint differences, and dynamic scene elements — regimes where standard feature-matching (e.g., SIFT) fails entirely due to minimal cross-view correspondence. The pipeline proceeds in four stages: **metadata bootstrapping → buffer extraction → manual frame matching → synchronized corruption removal**. With aligned frame pairs in hand, I evaluated **DUSt3R** for joint pose estimation and dense reconstruction across the ~180° baseline, and **Metric3D** as a per-view monocular depth baseline.
 
 <div style="display:flex;justify-content:center;margin:16px 0;">
   <div style="text-align:center;width:60%;">
@@ -51,7 +49,7 @@ How few cameras do you need to reconstruct a 3D traffic intersection — and wha
 
 The CS3 COSMOS testbed at Columbia already had a working pipeline: four networked CCTV cameras with synchronized internal clocks, all feeding into DUSt3R for dense 3D point cloud generation. The reconstruction worked well — four overlapping views with known timing produce clean geometry.
 
-<div style="display:flex;justify-content:center;margin:12px 0;"><video controls style="width:50%;border-radius:6px;"><source src="/images/Projects/4D/multi_reconstruction_h264.mp4" type="video/mp4" /></video></div>
+<div style="display:flex;justify-content:center;margin:12px 0;"><video controls style="width:75%;border-radius:6px;"><source src="/images/Projects/4D/multi_reconstruction_h264.mp4" type="video/mp4" /></video></div>
 <p style="text-align:center;font-size:0.85rem;color:gray;margin-top:4px;">4D reconstruction of all 4-cameras from the COSMOS testbed (DUSt3R, ViT-Large). All cameras are network-synchronized CCTVs.</p>
 
 But deploying four synchronized cameras at every intersection doesn't scale. The real question is whether you can get comparable reconstruction from fewer, cheaper, completely unsynchronized cameras — the kind of setup you'd actually deploy in the field.
