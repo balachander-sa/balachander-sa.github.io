@@ -18,7 +18,8 @@ const Main = ({ children, router }) => {
         <meta name="description" content="Balachander's homepage" />
         <meta name="author" content="Balachander Sathianarayanan" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="shortcut icon" href="/favicon.ico?v=2" type="image/x-icon" />
+        <link rel="icon" type="image/png" href="/favicon.png?v=3" />
+        <link rel="shortcut icon" href="/favicon.ico?v=3" type="image/x-icon" />
         <meta name="twitter:title" content="Balachander Sathianarayanan" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta property="og:site_name" content="Balachander Sathianarayanan" />
