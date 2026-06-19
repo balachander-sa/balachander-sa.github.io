@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(GIT_AUTHOR_DATE=\"2026-02-13T11:15:00\" GIT_COMMITTER_DATE=\"2026-02-13T11:15:00\" git commit -m \"perf: compress Emblem_of_India.jpeg \\(328KB -> 20KB\\)\")",
+      "Bash(GIT_AUTHOR_DATE=\"2026-02-13T11:25:00\" GIT_COMMITTER_DATE=\"2026-02-13T11:25:00\" git commit -m \"fix\\(experience\\): update RBCDSAI link to live URL\")",
+      "Bash(yarn dev *)",
+      "Bash(node -e \"const { theme } = require\\('@chakra-ui/react'\\); const t = theme.colors.teal; console.log\\('100:', t[100], '200:', t[200], '500:', t[500], '800:', t[800]\\)\")",
+      "Bash(node -e \"const t = require\\('@chakra-ui/theme'\\).theme.colors.teal; console.log\\('100:', t[100], '200:', t[200], '500:', t[500], '800:', t[800]\\)\")",
+      "Bash(xargs kill *)",
+      "Bash(git commit -m ' *)",
+      "Bash(pkill -f \"next dev\")",
+      "Bash(npm run dev > /tmp/nextjs-dev.log 2>&1 & *)",
+      "Read(//tmp/**)",
+      "Bash(git -C /Users/bala/Balachander-portfolio diff)",
+      "Bash(git -C /Users/bala/Balachander-portfolio status)"
+    ]
+  }
+}
